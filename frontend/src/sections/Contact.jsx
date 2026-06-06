@@ -4,7 +4,7 @@ import { Send, Mail, User, MessageSquare, Rocket, AlertCircle, Loader2 } from 'l
 import emailjs from '@emailjs/browser';
 
 // Initialize EmailJS with your Public Key
-emailjs.init("y3C9lTi5We_Tj2QHO");
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 const Contact = () => {
   const formRef = useRef();
@@ -39,8 +39,8 @@ const Contact = () => {
 
     setStatus('sending');
 
-    const SERVICE_ID = "service_mjazrrn";
-    const TEMPLATE_ID = "pcd43nh";
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 
     try {
       const templateParams = {
