@@ -1,223 +1,192 @@
-import React, { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { ExternalLink, Github, Sparkles } from 'lucide-react';
-
-const projects = [
-  {
-    title: "Campus Vote",
-    description: "A secure digital voting platform for academic institutions. Implements real-time result tracking and multi-factor authentication for transparent elections.",
-    tech: ["React.js", "Node.js", "Express", "MongoDB"],
-    category: "MERN Stack",
-    live: "https://campusvote-1.onrender.com",
-    github: "https://github.com",
-    image: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?auto=format&fit=crop&q=80&w=600&h=400",
-    glow: "shadow-[0_0_20px_rgba(0,242,255,0.2)]"
-  },
-  {
-    title: "SAHIRASTA",
-    description: "Home search today ignores commute time, cost, and safety, leading to poor living decisions and reduced quality of life.",
-    tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
-    category: "MERN Stack",
-    live: "https://sahirasta-topaz.vercel.app",
-    github: "https://github.com/sakshicharlewar/SAHIRASTA",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600&h=400",
-    glow: "shadow-[0_0_20px_rgba(145,94,255,0.2)]"
-  },
-  {
-    title: "SPECTRA-X",
-    description: "AI and Blockchain-powered platform for detecting illegal deforestation, mining activities, and environmental changes through real-time monitoring and secure data tracking.",
-    tech: ["React", "Node.js", "Express", "MongoDB", "Python"],
-    category: "AI & Python",
-    live: "https://spectra-xfinal.onrender.com/",
-    github: "https://github.com/sakshicharlewar/SPECTRA-X",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600&h=400",
-    glow: "shadow-[0_0_20px_rgba(0,242,255,0.2)]"
-  }
-];
-
-const categories = ["All", "MERN Stack", "AI & Python", "Other Projects"];
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Zap, Home, CheckCircle, Cpu, Database, Brain, Globe, Code2 } from 'lucide-react';
 
 const Projects = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  const [activeFilter, setActiveFilter] = useState('All');
 
-  const filteredProjects = selectedCategory === "All"
+  const projects = [
+    {
+      title: 'Campus Voting System',
+      description: 'A secure voting platform for student elections with real-time results. Implements modern authentication, role-based access control, and smooth UX to ensure fair and transparent elections on campus.',
+      tags: [
+        { name: 'React', icon: <Globe size={14} /> },
+        { name: 'Node.js', icon: <Cpu size={14} /> },
+        { name: 'MongoDB', icon: <Database size={14} /> }
+      ],
+      category: 'MERN Stack',
+      github: 'https://github.com/sakshicharlewar/CAMPUSVOTE',
+      live: 'https://campusvote-1.onrender.com',
+      icon: <CheckCircle />
+    },
+    {
+      title: 'Sahirasta',
+      description: 'SahiRasta is an AI-driven home search platform developed using the MERN Stack. It goes beyond traditional property listings by evaluating real-world factors like daily commute, living expenses, safety, and nearby amenities to recommend homes that best match a user\'s lifestyle and preferences.',
+      tags: [
+        { name: 'React', icon: <Globe size={14} /> },
+        { name: 'Node.js', icon: <Cpu size={14} /> },
+        { name: 'MongoDB', icon: <Database size={14} /> },
+        { name: 'AI', icon: <Brain size={14} /> }
+      ],
+      category: 'MERN Stack',
+      github: 'https://github.com/sakshicharlewar/SAHIRASTA',
+      live: 'https://sahirasta-topaz.vercel.app',
+      icon: <Home />
+    },
+    {
+      title: 'Spectra X',
+      description: 'AI and Blockchain-powered platform for detecting illegal deforestation, mining activities, and environmental changes through real-time monitoring and secure data tracking. Combines satellite imagery analysis with smart contracts for immutable audit trails.',
+      tags: [
+        { name: 'Python', icon: <Cpu size={14} /> },
+        { name: 'React', icon: <Globe size={14} /> },
+        { name: 'AI', icon: <Brain size={14} /> },
+        { name: 'Blockchain', icon: <Zap size={14} /> }
+      ],
+      category: 'AI & Python',
+      github: 'https://github.com/sakshicharlewar/SPECTRA-X',
+      live: 'https://spectra-xfinal.onrender.com/',
+      icon: <Zap />
+    },
+    {
+      title: '45 Days DSA Internship',
+      description: 'Comprehensive Data Structures and Algorithms repository with solutions to 45+ days of coding problems, including arrays, linked lists, trees, graphs, dynamic programming, and more. Built to master problem-solving and interview preparation.',
+      tags: [
+        { name: 'DSA', icon: <Code2 size={14} /> },
+        { name: 'Problem Solving', icon: <CheckCircle size={14} /> },
+        { name: 'Interview Prep', icon: <Zap size={14} /> }
+      ],
+      category: 'Other Projects',
+      github: 'https://github.com/sakshicharlewar/45DAYS_DSAINTERSHIP',
+      live: null,
+      icon: <Code2 />
+    }
+  ];
+
+  const filters = ['All', 'MERN Stack', 'AI & Python', 'Other Projects'];
+
+  const filteredProjects = activeFilter === 'All'
     ? projects
-    : projects.filter(project => project.category === selectedCategory);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5
-      }
-    }
-  };
+    : projects.filter(p => p.category === activeFilter);
 
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="py-32 relative overflow-hidden"
-      style={{ backgroundColor: '#050816' }}
-    >
-      {/* Subtle Background Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white/5"
-            style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -10, 0],
-              x: [0, 5, 0],
-            }}
-            transition={{
-              duration: `${Math.random() * 10 + 6}s`,
-              delay: `${Math.random() * 3}s`,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Title & Tagline */}
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            Builds That <span className="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">Speak Code</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-gray-400 max-w-2xl mx-auto text-lg"
-          >
-            A collection of scalable, real-world applications built with modern technologies, performance-first thinking, and clean architecture.
-          </motion.p>
-        </div>
-
-        {/* Filter Tabs */}
+    <section id="projects" className="py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-white/10 backdrop-blur-md border border-neonBlue/50 text-neonBlue shadow-[0_0_15px_rgba(0,242,255,0.3)]"
-                  : "bg-white/5 border border-white/10 text-gray-400 hover:border-neonBlue/30 hover:text-gray-200"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          <h2 className="text-4xl md:text-5xl font-black mb-4">
+            Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Projects</span>
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
+            Showcasing my work and contributions
+          </p>
+
+          {/* Filters */}
+          <div className="flex flex-wrap gap-3 justify-center">
+            {filters.map((filter) => (
+              <motion.button
+                key={filter}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+                  activeFilter === filter
+                    ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 shadow-[0_0_25px_rgba(6,182,212,0.4)]'
+                    : 'glass-card text-slate-300 hover:border-cyan-400/40'
+                }`}
+              >
+                {filter}
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          key={selectedCategory}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+          layout
+          className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
         >
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              variants={itemVariants}
-              className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-neonBlue/40 transition-all duration-500 bg-white/3 backdrop-blur-sm"
-            >
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent opacity-60"></div>
-              </div>
-
-              <div className="p-6">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[10px] px-2 py-1 bg-white/5 text-neonBlue border border-neonBlue/20 rounded-md font-bold uppercase tracking-wider"
-                    >
-                      {t}
-                    </span>
-                  ))}
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 50 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                whileHover={{ y: -12, boxShadow: '0 0 60px rgba(6,182,212,0.25)' }}
+                className="glass-card overflow-hidden group border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-500 rounded-2xl"
+              >
+                {/* Project Image Area */}
+                <div className="h-56 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 flex items-center justify-center relative overflow-hidden border-b border-cyan-500/30">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(6,182,212,0.25)_0%,_transparent_70%)]" />
+                  <div className="text-9xl text-cyan-400 drop-shadow-[0_0_30px_rgba(6,182,212,0.7)]">
+                    {project.icon}
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-neonBlue transition-colors tracking-tight">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                  {project.description}
-                </p>
-              </div>
 
-              {/* Floating Bottom-Right Icons */}
-              <div className="absolute bottom-4 right-4 flex flex-col gap-3">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/icon relative flex flex-col items-center opacity-0 translate-y-2 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-300"
-                >
-                  <div className="absolute inset-0 rounded-full bg-neonBlue/30 blur-md opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-gray-300 group-hover/icon:text-neonBlue group-hover/icon:border-neonBlue/50 group-hover/icon:scale-110 transition-all duration-300">
-                    <Github size={18} />
+                {/* Content */}
+                <div className="p-8">
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]">
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-300 text-base mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Tech Stack Chips */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.tags.map((tag, i) => (
+                      <motion.div
+                        key={tag.name}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.2 + i * 0.05 }}
+                        whileHover={{ scale: 1.08, boxShadow: '0 0 15px rgba(6,182,212,0.3)' }}
+                        className="flex items-center gap-2 px-4 py-2 bg-slate-900/70 border border-cyan-500/30 rounded-full text-cyan-400 text-sm font-semibold hover:border-cyan-400 transition-all duration-300"
+                      >
+                        {tag.icon}
+                        <span>{tag.name}</span>
+                      </motion.div>
+                    ))}
                   </div>
-                  <span className="text-[9px] uppercase tracking-widest text-gray-400 mt-1 opacity-0 translate-y-1 group-hover/icon:opacity-100 group-hover/icon:translate-y-0 transition-all duration-300">
-                    GitHub Repo
-                  </span>
-                </a>
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/icon relative flex flex-col items-center opacity-0 translate-y-2 scale-90 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 transition-all duration-300 delay-100"
-                >
-                  <div className="absolute inset-0 rounded-full bg-neonPurple/30 blur-md opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-gray-300 group-hover/icon:text-neonPurple group-hover/icon:border-neonPurple/50 group-hover/icon:scale-110 transition-all duration-300">
-                    <ExternalLink size={18} />
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-4">
+                    <motion.a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(6,182,212,0.4)' }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-3 bg-slate-900/80 border border-cyan-500/40 rounded-xl text-white font-bold text-sm hover:bg-cyan-500/10 hover:border-cyan-400 transition-all duration-300 ${!project.live ? 'w-full' : ''}`}
+                    >
+                      <Github size={16} />
+                      View Source Code
+                    </motion.a>
+                    {project.live && (
+                      <motion.a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(20,184,166,0.4)' }}
+                        whileTap={{ scale: 0.97 }}
+                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold text-sm rounded-xl hover:from-cyan-400 hover:to-teal-400 transition-all duration-300"
+                      >
+                        <ExternalLink size={16} />
+                        Explore Project
+                      </motion.a>
+                    )}
                   </div>
-                  <span className="text-[9px] uppercase tracking-widest text-gray-400 mt-1 opacity-0 translate-y-1 group-hover/icon:opacity-100 group-hover/icon:translate-y-0 transition-all duration-300">
-                    Live Demo
-                  </span>
-                </a>
-              </div>
-            </motion.div>
-          ))}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

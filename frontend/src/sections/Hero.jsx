@@ -1,154 +1,111 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Briefcase } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 
 const Hero = () => {
-  // Tech stack tags
-  const techStack = [
-    'React.js', 'Node.js', 'Express.js', 'MongoDB',
-    'JavaScript', 'Java', 'Python', 'Git & GitHub'
+  const techStack = ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Java', 'Python', 'DSA'];
+  const stats = [
+    { number: '8+', label: 'Technologies Explored' },
+    { number: '5+', label: 'Projects Built' },
+    { number: '∞', label: 'Consistent Learning & Development' }
   ];
 
   return (
-    <section 
-      id="home" 
-      className="relative w-full min-h-screen overflow-hidden flex items-center"
-      style={{ backgroundColor: '#050B1A' }}
-    >
-      {/* Background Elements */}
-      <div className="absolute inset-0 -z-20">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-neonBlue/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neonPurple/10 blur-[150px] rounded-full" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center w-full z-10 py-20">
-        
-        {/* Content */}
+    <section id="home" className="min-h-screen flex items-center pt-20 pb-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full lg:w-3/4 text-center lg:text-left"
         >
           {/* Top Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glassmorphism border border-neonBlue/30 mb-6"
-          >
-            <span className="text-orange-400">🔥</span>
-            <span className="text-sm text-gray-300 font-medium">Driven by Code, Inspired by Innovation</span>
-          </motion.div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full mb-8">
+            <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+            <span className="text-cyan-400 text-sm font-medium">Available for Work</span>
+          </div>
 
           {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
-          >
-            Building Innovative Solutions with <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue via-cyan-400 to-neonPurple">
-              MERN Stack
-            </span>
-            {' '}&{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue via-cyan-400 to-neonPurple">
-              AI
-            </span>
-          </motion.h1>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-2 tracking-tight leading-tight">
+            Building Innovative Solutions
+          </h1>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-tight">
+            with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)]">MERN Stack & AI</span>
+          </h2>
 
-          {/* Introduction */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-gray-400 text-base md:text-lg mb-8 leading-relaxed max-w-2xl"
-          >
-            I'm Sakshi Charlewar, a Computer Engineering student and passionate developer from Nagpur. I specialize in building modern, responsive, and scalable web applications using React.js, Node.js, Express.js, and MongoDB. With strong skills in Java, Python, and Data Structures & Algorithms, I enjoy transforming ideas into real-world digital products.
-          </motion.p>
+          {/* Description Text */}
+          <p className="text-lg md:text-xl text-slate-400 mb-4 leading-relaxed max-w-3xl mx-auto">
+            I’m Sakshi Charlewar, a Computer Engineering student and passionate developer from Nagpur. I specialize in building modern, responsive, and scalable web applications using React.js, Node.js, Express.js, and MongoDB. I also have strong knowledge of Java, Python, and Data Structures & Algorithms.
+          </p>
+          <p className="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed max-w-3xl mx-auto">
+            I love turning ideas into real-world digital products.
+          </p>
 
-          {/* Social Icons (Above CTA) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex items-center gap-4 mb-6"
-          >
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-3 glassmorphism rounded-xl border border-white/10 hover:border-neonBlue transition-all hover:scale-110">
-              <Github size={24} className="text-gray-300 hover:text-neonBlue" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-3 glassmorphism rounded-xl border border-white/10 hover:border-neonPurple transition-all hover:scale-110">
-              <Linkedin size={24} className="text-gray-300 hover:text-neonPurple" />
-            </a>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap gap-4 mb-10"
-          >
-            <motion.a
-              href="#projects"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-gradient-to-r from-neonBlue to-neonPurple text-white font-semibold rounded-xl flex items-center gap-2 transition-all"
-            >
-              View Projects <ArrowRight size={20} />
-            </motion.a>
-            
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 glassmorphism border border-neonPurple/30 text-white font-semibold rounded-xl hover:border-neonPurple transition-all"
-            >
-              Hire Me
-            </motion.a>
-          </motion.div>
-
-          {/* Statistics Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10"
-          >
-            <div className="glassmorphism rounded-xl p-4 border border-neonBlue/20">
-              <div className="flex items-center gap-2">
-                <Briefcase size={20} className="text-neonBlue" />
-                <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">5+</div>
-              </div>
-              <div className="text-sm text-gray-400">Projects Built</div>
-            </div>
-            <div className="glassmorphism rounded-xl p-4 border border-cyan-400/20">
-              <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">2024–2028</div>
-              <div className="text-sm text-gray-400">B.Tech Journey</div>
-            </div>
-          </motion.div>
+          {/* Stats Section */}
+          <div className="flex flex-wrap justify-center gap-6 mb-10">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                className="glass-card p-4 border-cyan-400/20 rounded-[20px] min-w-[180px]"
+              >
+                <p className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400 mb-1">
+                  {stat.number}
+                </p>
+                <p className="text-slate-400 text-sm font-medium">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
 
           {/* Tech Stack Tags */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex flex-wrap gap-3"
-          >
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
             {techStack.map((tech, index) => (
               <motion.span
-                key={tech}
+                key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.8 + index * 0.05 }}
-                whileHover={{ scale: 1.1, y: -3 }}
-                className="px-4 py-2 glassmorphism border border-white/10 rounded-full text-sm text-gray-300 hover:border-neonBlue/50 transition-all cursor-default"
+                transition={{ duration: 0.3, delay: 0.7 + index * 0.05 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(6,182,212,0.3)" }}
+                className="px-4 py-2 bg-slate-900/60 backdrop-blur-xl border border-cyan-500/20 rounded-full text-sm font-medium text-cyan-400 transition-all"
               >
                 {tech}
               </motion.span>
             ))}
-          </motion.div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center">
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary flex items-center gap-2"
+            >
+              View Projects <ArrowRight size={20} />
+            </motion.a>
+            <motion.a
+              href="#contact"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="glass-card py-3 px-8 font-bold hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all"
+            >
+              Hire Me
+            </motion.a>
+            <motion.a
+              href="https://drive.google.com/file/d/1gvMzVGhYa4Dymyd2Hn2KdKHsEF0AFJ9q/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="glass-card py-3 px-8 font-bold hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all flex items-center gap-2"
+            >
+              <Download size={20} />
+              Download Resume
+            </motion.a>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Send, Bot } from 'lucide-react';
+import { MessageCircle, X, Send, Zap } from 'lucide-react';
 
 const AIChatButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'bot', text: 'Hello! I am Sakshi\'s AI assistant. How can I help you today?' }
+    { role: 'assistant', content: "Hi! I'm Sakshi's AI assistant. How can I help you today?" },
   ]);
   const [input, setInput] = useState('');
 
@@ -13,89 +13,87 @@ const AIChatButton = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage = { role: 'user', text: input };
-    setMessages([...messages, userMessage]);
+    setMessages([...messages, { role: 'user', content: input }]);
+    const userMsg = input;
     setInput('');
 
-    // Simulate bot response
     setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        role: 'bot', 
-        text: 'That sounds interesting! Sakshi is currently available for collaborations. You can contact her via the form above or email.' 
-      }]);
-    }, 1000);
+      setMessages(prev => [
+        ...prev,
+        { role: 'assistant', content: `Thanks for your message! This is a demo chat, but feel free to reach out to Sakshi directly for real conversations! 🚀` }
+      ]);
+    }, 800);
   };
 
   return (
-    <div className="fixed bottom-8 right-8 z-[100]">
+    <div className="fixed bottom-6 right-6 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="glassmorphism w-80 md:w-96 h-[450px] rounded-3xl border border-white/10 shadow-2xl mb-4 overflow-hidden flex flex-col"
-          >
-            {/* Header */}
-            <div className="p-4 bg-gradient-to-r from-neonBlue to-neonPurple flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-white/20 rounded-lg">
-                  <Bot size={20} className="text-white" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">SAKSHI_AI</h4>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-[10px] text-white/70 font-bold uppercase tracking-widest">Online</span>
-                  </div>
-                </div>
+          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 50, scale: 0.8 }}
+          className="glass-card w-80 md:w-96 h-[500px] mb-4 rounded-2xl border-cyan-500/20 shadow-[0_0_40px_rgba(6,182,212,0.15)] overflow-hidden"
+        >
+          {/* Header */}
+          <div className="bg-gradient-to-r from-cyan-500 to-teal-500 p-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <Zap size={20} className="text-white" />
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white transition-colors">
-                <X size={20} />
+              <div>
+                <h3 className="font-bold text-slate-950">AI Assistant</h3>
+                <p className="text-xs text-slate-800">Online</p>
+              </div>
+            </div>
+            <button onClick={() => setIsOpen(false)} className="text-slate-950 hover:text-white">
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 h-[370px]">
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`max-w-[80%] p-3 rounded-2xl ${
+                  msg.role === 'user'
+                    ? 'ml-auto bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 rounded-br-sm'
+                    : 'bg-slate-800/80 text-white rounded-bl-sm'
+                }`}
+              >
+                <p className="text-sm">{msg.content}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Input */}
+          <form onSubmit={handleSend} className="p-4 border-t border-cyan-500/10">
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type a message..."
+                className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400"
+              />
+              <button type="submit" className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 rounded-xl hover:scale-105 transition-transform">
+                <Send size={18} />
               </button>
             </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${
-                    msg.role === 'user' 
-                      ? 'bg-neonBlue/20 border border-neonBlue/30 text-white rounded-tr-none' 
-                      : 'bg-white/5 border border-white/10 text-gray-300 rounded-tl-none'
-                  }`}>
-                    {msg.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Input */}
-            <form onSubmit={handleSend} className="p-4 border-t border-white/5 bg-white/5">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
-                  className="w-full bg-primary/50 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-neonBlue transition-all pr-10"
-                />
-                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-neonBlue hover:text-neonPurple transition-colors">
-                  <Send size={18} />
-                </button>
-              </div>
-            </form>
-          </motion.div>
+          </form>
+        </motion.div>
         )}
       </AnimatePresence>
 
+      {/* Floating Button */}
       <motion.button
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="p-4 glassmorphism border border-white/10 text-gray-300 hover:text-white rounded-full flex items-center justify-center transition-all"
+        className="w-16 h-16 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 shadow-[0_0_30px_rgba(6,182,212,0.4)] flex items-center justify-center"
       >
-        {isOpen ? <X size={28} /> : <MessageSquare size={28} />}
+        <MessageCircle size={32} className="text-slate-950" />
       </motion.button>
     </div>
   );

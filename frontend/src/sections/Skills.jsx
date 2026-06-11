@@ -1,187 +1,153 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Layers, Server, Database, Code, GitBranch, Brain } from 'lucide-react';
+  Code, 
+  Globe, 
+  Brain, 
+  BarChart3, 
+  Wrench,
+  FileCode,
+  Layout,
+  Terminal,
+  Server,
+  Database,
+  Coffee,
+  GitBranch as Git,
+  Github
+} from 'lucide-react';
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      name: 'Frontend Development',
-      icon: <Layers size={20} />,
-      skills: [
-        { name: 'React.js', icon: '⚛️' },
-        { name: 'HTML', icon: '🌐' },
-        { name: 'CSS', icon: '🎨' },
-        { name: 'JavaScript', icon: '💻' },
-      ],
-    },
-    {
-      name: 'Backend Development',
-      icon: <Server size={20} />,
-      skills: [
-        { name: 'Node.js', icon: '🟢' },
-        { name: 'Express.js', icon: '🚀' },
-      ],
-    },
-    {
-      name: 'Database',
-      icon: <Database size={20} />,
-      skills: [
-        { name: 'MongoDB', icon: '🍃' },
-      ],
-    },
-    {
-      name: 'Programming Languages',
-      icon: <Code size={20} />,
-      skills: [
-        { name: 'Java', icon: '☕' },
-        { name: 'Python', icon: '🐍' },
-      ],
-    },
-    {
-      name: 'Tools & Version Control',
-      icon: <GitBranch size={20} />,
-      skills: [
-        { name: 'Git', icon: '📦' },
-        { name: 'GitHub', icon: '🐙' },
-        { name: 'VS Code', icon: '📝' },
-      ],
-    },
-    {
-      name: 'Learning & Exploring',
-      icon: <Brain size={20} />,
-      skills: [
-        { name: 'Artificial Intelligence', icon: '🤖' },
-        { name: 'REST APIs', icon: '🔗' },
-      ],
-    },
+  // Category definitions
+  const categories = [
+    { id: 'languages', name: 'Languages', icon: <Code size={28} /> },
+    { id: 'web', name: 'Web Development', icon: <Globe size={28} /> },
+    { id: 'ai', name: 'Artificial Intelligence', icon: <Brain size={28} /> },
+    { id: 'analytics', name: 'Analytics', icon: <BarChart3 size={28} /> },
+    { id: 'tools', name: 'Tools & Version Control', icon: <Wrench size={28} /> }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+  // Skills data by category with themed icons
+  const skillsData = {
+    languages: [
+      { name: 'Java', icon: <Coffee size={18} /> },
+      { name: 'Python', icon: <Terminal size={18} /> },
+      { name: 'JavaScript', icon: <FileCode size={18} /> }
+    ],
+    web: [
+      { name: 'HTML', icon: <Globe size={18} /> },
+      { name: 'CSS', icon: <Layout size={18} /> },
+      { name: 'React.js', icon: <Code size={18} /> },
+      { name: 'Node.js', icon: <Terminal size={18} /> },
+      { name: 'Express.js', icon: <Server size={18} /> },
+      { name: 'MongoDB', icon: <Database size={18} /> }
+    ],
+    ai: [
+      { name: 'AI Fundamentals', icon: <Brain size={18} /> },
+      { name: 'Prompt Engineering', icon: <Code size={18} /> },
+      { name: 'Machine Learning Basics', icon: <BarChart3 size={18} /> }
+    ],
+    analytics: [
+      { name: 'Data Analysis', icon: <BarChart3 size={18} /> },
+      { name: 'REST APIs', icon: <Server size={18} /> },
+      { name: 'Problem Solving', icon: <Code size={18} /> }
+    ],
+    tools: [
+      { name: 'Git', icon: <Git size={18} /> },
+      { name: 'GitHub', icon: <Github size={18} /> },
+      { name: 'VS Code', icon: <FileCode size={18} /> }
+    ]
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const skillItemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.1 * i,
-        duration: 0.4,
-      },
-    }),
-  };
-
-  const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
+  // Active category state
+  const [activeCategory, setActiveCategory] = useState('languages');
 
   return (
-    <section
-      ref={sectionRef}
-      id="skills"
-      className="py-32 relative overflow-hidden"
-      style={{ backgroundColor: '#050816' }}
-    >
-      {/* Subtle Background Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white/5"
-            style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -10, 0],
-              x: [0, 5, 0],
-            }}
-            transition={{
-              duration: `${Math.random() * 10 + 6}s`,
-              delay: `${Math.random() * 3}s`,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="skills" className="py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-center mb-20"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold">
-            Building Blocks of <span className="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">My Development Journey</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#E2E8F0] drop-shadow-[0_0_12px_rgba(34,211,238,0.2)] tracking-tight">
+            Technologies Behind The <span className="text-[#22D3EE]">Build</span>
           </h2>
         </motion.div>
 
-        {/* Categories Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={catIndex}
-              variants={cardVariants}
-              whileHover={{ y: -5 }}
-              className="group"
+        {/* Category Navigation Tabs */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {categories.map((category) => (
+            <motion.button
+              key={category.id}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveCategory(category.id)}
+              className={`
+                relative flex items-center justify-center
+                w-20 h-20 md:w-24 md:h-24 rounded-full
+                bg-slate-900/60 backdrop-blur-xl
+                border-2 transition-all duration-300
+                ${activeCategory === category.id 
+                  ? 'border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.4)] text-cyan-400' 
+                  : 'border-cyan-500/20 text-slate-400 hover:border-cyan-500/40'
+                }
+              `}
             >
-              <div className="border border-white/20 rounded-xl p-6 transition-all duration-300">
-                {/* Category Header */}
-                <div className="flex items-center gap-3 mb-5 pb-3 border-b border-white/10">
-                  <div className="p-2 bg-white/5 rounded-lg text-gray-400 group-hover:text-neonBlue transition-colors">
-                    {category.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-200">{category.name}</h3>
-                </div>
-
-                {/* Skills List */}
-                <div className="flex flex-wrap gap-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      custom={skillIndex}
-                      variants={skillItemVariants}
-                      whileHover={{ scale: 1.05 }}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 bg-white/5 text-gray-300 hover:border-neonBlue/40 hover:text-gray-100 transition-all duration-200"
-                    >
-                      <span className="text-lg">{skill.icon}</span>
-                      <span className="text-sm font-medium">{skill.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              {category.icon}
+              {/* Tooltip for mobile */}
+              <span className="absolute -bottom-8 text-xs font-medium opacity-0 hover:opacity-100 transition-opacity whitespace-nowrap">
+                {category.name}
+              </span>
+            </motion.button>
           ))}
+        </div>
+
+        {/* Active Category Name */}
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-center mb-10"
+        >
+          <h3 className="text-2xl font-bold text-cyan-400 mb-2">
+            {categories.find(cat => cat.id === activeCategory)?.name}
+          </h3>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto" />
         </motion.div>
+
+        {/* Skills Display */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="flex flex-wrap justify-center gap-4"
+          >
+            {skillsData[activeCategory].map((skill, idx) => (
+              <motion.div
+                key={`${activeCategory}-${idx}`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  boxShadow: "0 0 20px rgba(34,211,238,0.3)",
+                  borderColor: "rgba(34,211,238,0.5)"
+                }}
+                className="flex items-center gap-3 px-6 py-3 bg-slate-900/60 backdrop-blur-xl border-2 border-cyan-500/20 rounded-full text-lg font-medium text-cyan-400 transition-all duration-300"
+              >
+                {skill.icon}
+                <span>{skill.name}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );
